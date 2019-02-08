@@ -16,6 +16,11 @@ AVRD_FLAGS = -v
 #FUSES      = -U lfuse:w:0xFF:m -U hfuse:w:0xDE:m -U efuse:w:0x05:m
 UART_BAUD  = 115200
 
+# stdio printf options: float, minimal, normal
+#LIB_PRINTF = -Wl,-u,vfprintf -lprintf_flt -lm
+#LIB_PRINTF = -Wl,-u,vfprintf -lprintf_min
+LIB_PRINTF =
+
 # files
 ELF        = $(TARGET).elf
 HEX        = $(TARGET).hex
@@ -28,11 +33,6 @@ ASMS       = $(SOURCES:.c=.s)
 TEST_TGT   = $(TARGET)_test
 TEST_SRC   = $(TEST_TGT).c
 TEST_OBJ   = $(TEST_TGT).o
-
-# stdio printf options: float, minimal, normal
-#LIB_PRINTF = -Wl,-u,vfprintf -lprintf_flt -lm
-#LIB_PRINTF = -Wl,-u,vfprintf -lprintf_min
-LIB_PRINTF =
 
 # compiler options
 STANDARD   = -std=gnu11
