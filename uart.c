@@ -32,8 +32,8 @@ void uart_putchar(uint8_t c, __attribute__ ((unused))FILE *stream)
 //----------------------------------------------------------------------------------------------------
 void uart_init(void)
 	{
-	UCSR0C = _BV(UCSZ01) | _BV(UCSZ00); // 8-bit data
-	UCSR0B = _BV(RXEN0)  | _BV(TXEN0);  // Enable RX and TX
+	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00); // 8-bit data
+	UCSR0B = (1 << RXEN0)  | (1 << TXEN0);  // Enable RX and TX
 
 	// setup stdio
 	stdin  = &uart_input;
@@ -53,9 +53,9 @@ void uart_init_1200(void)
 	UBRR0L = UBRRL_VALUE;
 
 	#if USE_2X
-	UCSR0A |= _BV(U2X0);
+	UCSR0A |= (1 << U2X0);
 	#else
-	UCSR0A &= (uint8_t)~(_BV(U2X0));
+	UCSR0A &= (uint8_t)~(1 << U2X0);
 	#endif
 
 	uart_init();
@@ -73,9 +73,9 @@ void uart_init_2400(void)
 	UBRR0L = UBRRL_VALUE;
 
 	#if USE_2X
-	UCSR0A |= _BV(U2X0);
+	UCSR0A |= (1 << U2X0);
 	#else
-	UCSR0A &= (uint8_t)~(_BV(U2X0));
+	UCSR0A &= (uint8_t)~(1 << U2X0);
 	#endif
 
 	uart_init();
@@ -93,9 +93,9 @@ void uart_init_9600(void)
 	UBRR0L = UBRRL_VALUE;
 
 	#if USE_2X
-	UCSR0A |= _BV(U2X0);
+	UCSR0A |= (1 << U2X0);
 	#else
-	UCSR0A &= (uint8_t)~(_BV(U2X0));
+	UCSR0A &= (uint8_t)~(1 << U2X0);
 	#endif
 
 	uart_init();
@@ -113,9 +113,9 @@ void uart_init_19200(void)
 	UBRR0L = UBRRL_VALUE;
 
 	#if USE_2X
-	UCSR0A |= _BV(U2X0);
+	UCSR0A |= (1 << U2X0);
 	#else
-	UCSR0A &= (uint8_t)~(_BV(U2X0));
+	UCSR0A &= (uint8_t)~(1 << U2X0);
 	#endif
 
 	uart_init();
@@ -133,9 +133,9 @@ void uart_init_38400(void)
 	UBRR0L = UBRRL_VALUE;
 
 	#if USE_2X
-	UCSR0A |= _BV(U2X0);
+	UCSR0A |= (1 << U2X0);
 	#else
-	UCSR0A &= (uint8_t)~(_BV(U2X0));
+	UCSR0A &= (uint8_t)~(1 << U2X0);
 	#endif
 
 	uart_init();
@@ -153,9 +153,9 @@ void uart_init_57600(void)
 	UBRR0L = UBRRL_VALUE;
 
 	#if USE_2X
-	UCSR0A |= _BV(U2X0);
+	UCSR0A |= (1 << U2X0);
 	#else
-	UCSR0A &= (uint8_t)~(_BV(U2X0));
+	UCSR0A &= (uint8_t)~(1 << U2X0);
 	#endif
 
 	uart_init();
@@ -174,9 +174,9 @@ void uart_init_115200(void)
 	UBRR0L = UBRRL_VALUE;
 
 	#if USE_2X
-	UCSR0A |= _BV(U2X0);
+	UCSR0A |= (1 << U2X0);
 	#else
-	UCSR0A &= (uint8_t)~(_BV(U2X0));
+	UCSR0A &= (uint8_t)~(1 << U2X0);
 	#endif
 
 	uart_init();
