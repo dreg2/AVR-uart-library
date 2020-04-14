@@ -1,6 +1,11 @@
 #include <avr/io.h>
 #include <stdio.h>
 
+#ifndef BAUD
+	#define BAUD 19200
+#endif
+#include <util/setbaud.h>
+
 #include "uart.h"
 
 FILE uart_input  = FDEV_SETUP_STREAM(NULL, uart_getchar, _FDEV_SETUP_READ);
@@ -32,8 +37,8 @@ void uart_putchar(uint8_t c, __attribute__ ((unused))FILE *stream)
 //----------------------------------------------------------------------------------------------------
 void uart_init(void)
 	{
-	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00); // 8-bit data
 	UCSR0B = (1 << RXEN0)  | (1 << TXEN0);  // Enable RX and TX
+	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00); // 8-bit data
 
 	// setup stdio
 	stdin  = &uart_input;
@@ -42,143 +47,18 @@ void uart_init(void)
 	}
 
 //----------------------------------------------------------------------------------------------------
-// init uart baud 1200
+// init uart baud to BAUD
 //----------------------------------------------------------------------------------------------------
-void uart_init_1200(void)
+void uart_init_baud(void)
 	{
-	#undef BAUD
-	#define BAUD 1200
-	#include <util/setbaud.h>
 	UBRR0H = UBRRH_VALUE;
 	UBRR0L = UBRRL_VALUE;
 
 	#if USE_2X
-	UCSR0A |= (1 << U2X0);
+		UCSR0A |= (1 << U2X0);
 	#else
-	UCSR0A &= (uint8_t)~(1 << U2X0);
+		UCSR0A &= (uint8_t)~(1 << U2X0);
 	#endif
 
 	uart_init();
 	}
-
-//----------------------------------------------------------------------------------------------------
-// init uart baud 2400
-//----------------------------------------------------------------------------------------------------
-void uart_init_2400(void)
-	{
-	#undef BAUD
-	#define BAUD 2400
-	#include <util/setbaud.h>
-	UBRR0H = UBRRH_VALUE;
-	UBRR0L = UBRRL_VALUE;
-
-	#if USE_2X
-	UCSR0A |= (1 << U2X0);
-	#else
-	UCSR0A &= (uint8_t)~(1 << U2X0);
-	#endif
-
-	uart_init();
-	}
-
-//----------------------------------------------------------------------------------------------------
-// init uart baud 9600
-//----------------------------------------------------------------------------------------------------
-void uart_init_9600(void)
-	{
-	#undef BAUD
-	#define BAUD 9600
-	#include <util/setbaud.h>
-	UBRR0H = UBRRH_VALUE;
-	UBRR0L = UBRRL_VALUE;
-
-	#if USE_2X
-	UCSR0A |= (1 << U2X0);
-	#else
-	UCSR0A &= (uint8_t)~(1 << U2X0);
-	#endif
-
-	uart_init();
-	}
-
-//----------------------------------------------------------------------------------------------------
-// init uart baud 19200
-//----------------------------------------------------------------------------------------------------
-void uart_init_19200(void)
-	{
-	#undef BAUD
-	#define BAUD 19200
-	#include <util/setbaud.h>
-	UBRR0H = UBRRH_VALUE;
-	UBRR0L = UBRRL_VALUE;
-
-	#if USE_2X
-	UCSR0A |= (1 << U2X0);
-	#else
-	UCSR0A &= (uint8_t)~(1 << U2X0);
-	#endif
-
-	uart_init();
-	}
-
-//----------------------------------------------------------------------------------------------------
-// init uart baud 38400
-//----------------------------------------------------------------------------------------------------
-void uart_init_38400(void)
-	{
-	#undef BAUD
-	#define BAUD 38400
-	#include <util/setbaud.h>
-	UBRR0H = UBRRH_VALUE;
-	UBRR0L = UBRRL_VALUE;
-
-	#if USE_2X
-	UCSR0A |= (1 << U2X0);
-	#else
-	UCSR0A &= (uint8_t)~(1 << U2X0);
-	#endif
-
-	uart_init();
-	}
-
-//----------------------------------------------------------------------------------------------------
-// init uart baud 57600
-//----------------------------------------------------------------------------------------------------
-void uart_init_57600(void)
-	{
-	#undef BAUD
-	#define BAUD 57600
-	#include <util/setbaud.h>
-	UBRR0H = UBRRH_VALUE;
-	UBRR0L = UBRRL_VALUE;
-
-	#if USE_2X
-	UCSR0A |= (1 << U2X0);
-	#else
-	UCSR0A &= (uint8_t)~(1 << U2X0);
-	#endif
-
-	uart_init();
-	}
-
-//----------------------------------------------------------------------------------------------------
-// init uart baud 115200
-// NOTE: setbaud.h isssues a warning "Baud rate achieved is higher than allowed" but it works
-//----------------------------------------------------------------------------------------------------
-void uart_init_115200(void)
-	{
-	#undef BAUD
-	#define BAUD 115200
-	#include <util/setbaud.h>
-	UBRR0H = UBRRH_VALUE;
-	UBRR0L = UBRRL_VALUE;
-
-	#if USE_2X
-	UCSR0A |= (1 << U2X0);
-	#else
-	UCSR0A &= (uint8_t)~(1 << U2X0);
-	#endif
-
-	uart_init();
-	}
-
